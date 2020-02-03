@@ -138,17 +138,17 @@ init_config() {
 
 _clean() {
 	# Encrypt using OpenSSL
-	openssl enc -base64 -$CIPHER -S "$SALT" -k "$PASS"
+	openssl enc -md md5 -base64 -$CIPHER -S "$SALT" -k "$PASS"
 }
 
 _smudge() {
 	# If decryption fails, use `cat` instead
-	openssl enc -d -base64 -$CIPHER -k "$PASS" 2> /dev/null || cat
+	openssl enc -d -md md5 -base64 -$CIPHER -k "$PASS" 2> /dev/null || cat
 }
 
 _diff() {
 	# If decryption fails, use `cat` instead
-	openssl enc -d -base64 -$CIPHER -k "$PASS" -in "$1" 2> /dev/null || cat "$1"
+	openssl enc -d -md md5 -base64 -$CIPHER -k "$PASS" -in "$1" 2> /dev/null || cat "$1"
 }
 
 _crypthistory_impl() {
